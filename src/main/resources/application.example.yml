@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: kometa-backend
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: kometa
+    password: passwd
+    url: jdbc:postgresql://localhost:5432/kometa
+    jpa:
+      hibernate:
+        ddl-auto: update
+      open-in-view: false
+    jackson:
+      property-naming-strategy: SNAKE_CASE
+    rabbitmq:
+      host: localhost
+
+config:
+  version: 0.1
+  env: dev # dev or prod
