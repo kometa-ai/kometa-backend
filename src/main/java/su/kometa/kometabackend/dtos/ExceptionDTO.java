@@ -1,0 +1,19 @@
+package su.kometa.kometabackend.dtos;
+
+import lombok.Data;
+import su.kometa.kometabackend.models.User;
+
+@Data
+public class ExceptionDTO {
+    private boolean ok;
+
+    private int code;
+
+    private String message;
+
+    public ExceptionDTO(boolean ok, int code, String message) {
+        this.ok = ok;
+        this.code = code;
+        this.message = message;
+    }
+}
