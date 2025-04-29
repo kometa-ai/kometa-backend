@@ -1,4 +1,4 @@
-package su.kometa.kometabackend.constants;;
+package su.kometa.kometabackend.constants;
 
 public class ExceptionsConstants {
 

@@ -1,6 +1,5 @@
 package su.kometa.kometabackend.exceptions;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;

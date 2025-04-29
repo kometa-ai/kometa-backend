@@ -1,7 +1,6 @@
 package su.kometa.kometabackend.dtos;
 
 import lombok.Data;
-import su.kometa.kometabackend.models.User;
 
 @Data
 public class ExceptionDTO {
