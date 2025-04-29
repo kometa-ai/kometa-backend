@@ -1,0 +1,5 @@
+package su.kometa.kometabackend.controllers;
+
+public class ModelController
+{
+}
