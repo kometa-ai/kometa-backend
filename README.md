@@ -1,0 +1,1 @@
+<img src=".github/assets/splash.png" alt="Backend kometa">
