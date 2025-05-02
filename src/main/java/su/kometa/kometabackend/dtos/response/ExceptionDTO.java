@@ -1,4 +1,4 @@
-package su.kometa.kometabackend.dtos;
+package su.kometa.kometabackend.dtos.response;
 
 import lombok.Data;
 

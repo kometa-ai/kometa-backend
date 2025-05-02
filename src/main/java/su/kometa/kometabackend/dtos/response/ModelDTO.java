@@ -1,4 +1,4 @@
-package su.kometa.kometabackend.dtos;
+package su.kometa.kometabackend.dtos.response;
 
 import lombok.Data;
 import su.kometa.kometabackend.models.Model;
@@ -10,8 +10,11 @@ public class ModelDTO {
 
     private String name;
 
+    private String provider;
+
     public ModelDTO(Model model) {
         this.id = model.getId();
         this.name = model.getName();
+        this.provider = model.getProvider();
     }
 }
