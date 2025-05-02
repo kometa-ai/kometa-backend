@@ -3,7 +3,9 @@ package su.kometa.kometabackend.interceptors;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import su.kometa.kometabackend.constants.AttributesConstants;
 import su.kometa.kometabackend.exceptions.ChatNotFoundException;
@@ -12,6 +14,8 @@ import su.kometa.kometabackend.services.ChatService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Slf4j
+@Component
 public class ChatInterceptor implements HandlerInterceptor {
 
     private final ChatService chatService;

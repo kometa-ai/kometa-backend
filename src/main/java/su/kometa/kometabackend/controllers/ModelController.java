@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @RequestMapping(value = RoutesConstants.MODELS_ROUTES, produces = "application/json")
 public class ModelController {
 
-    ModelService modelService;
+    final ModelService modelService;
 
     public ModelController(ModelService modelService) {
         this.modelService = modelService;

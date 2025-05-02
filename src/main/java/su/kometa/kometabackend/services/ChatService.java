@@ -4,14 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import su.kometa.kometabackend.dtos.request.ChatCreateDTO;
 import su.kometa.kometabackend.dtos.request.ChatEditDTO;
-import su.kometa.kometabackend.dtos.response.ChatDTO;
 import su.kometa.kometabackend.exceptions.ChatNotFoundException;
 import su.kometa.kometabackend.exceptions.ModelNotFoundException;
 import su.kometa.kometabackend.models.Chat;
-import su.kometa.kometabackend.models.Model;
 import su.kometa.kometabackend.models.User;
 import su.kometa.kometabackend.repositories.ChatRepository;
-import su.kometa.kometabackend.repositories.UserRepository;
 
 import java.util.List;
 

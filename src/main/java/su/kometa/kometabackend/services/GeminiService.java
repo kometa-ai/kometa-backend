@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 import su.kometa.kometabackend.configs.ModelConfig;
 import su.kometa.kometabackend.exceptions.WrongModelResponseException;
 import su.kometa.kometabackend.models.Chat;
@@ -23,18 +21,15 @@ import java.util.List;
 @Service
 public class GeminiService {
 
-    private ModelConfig modelConfig;
+    private final HttpClient httpClient;
 
-    private HttpClient httpClient;
+    private final Model model;
 
-    private Model model;
-
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @Autowired
     public GeminiService(ModelConfig modelConfig) {
         this.model = new Model();
-        this.modelConfig = modelConfig;
 
         model.setApiURL(modelConfig.getGemini().getApi().getUrl());
         model.setApiKey(modelConfig.getGemini().getApi().getKey());
@@ -72,7 +67,7 @@ public class GeminiService {
 
             if (response.statusCode() == 200) {
                 ServiceResponseBody responseBody = objectMapper.readValue(response.body(), ServiceResponseBody.class);
-                return new Message(0, null, this.model, chat, responseBody.getCandidates().getFirst().getContent().getParts().getFirst().getText());
+                return new Message(null, this.model, chat, responseBody.getCandidates().getFirst().getContent().getParts().getFirst().getText());
             } else {
                 throw new WrongModelResponseException();
             }

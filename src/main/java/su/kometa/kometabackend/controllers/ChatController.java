@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping(value = RoutesConstants.CHATS_ROUTE, produces = "application/json")
 public class ChatController {
 
-    ChatService chatService;
+    final ChatService chatService;
 
     public ChatController(ChatService chatService) {
         this.chatService = chatService;

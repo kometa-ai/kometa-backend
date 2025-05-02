@@ -19,7 +19,7 @@ import java.util.Objects;
 @Component
 public class AuthorizationInterceptor implements HandlerInterceptor {
 
-    private AuthorizationService authorizationService;
+    private final AuthorizationService authorizationService;
 
     @Autowired
     public AuthorizationInterceptor(AuthorizationService authorizationService) {
