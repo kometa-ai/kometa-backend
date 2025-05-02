@@ -16,6 +16,7 @@ public class ExceptionsConstants {
 
     public enum Messages {
         USER_NOT_FOUND("User not found"),
+        NEED_TO_AUTHORIZE("You need to authorize first"),
         MODEL_NOT_FOUND("Model not found"),
         CHAT_NOT_FOUND("Chat not found"),
         MESSAGE_NOT_FOUND("Message not found"),
@@ -23,7 +24,8 @@ public class ExceptionsConstants {
         INTERNAL_ERROR("An internal server error has occurred"),
         ROUTE_NOT_FOUND("Route not found"),
         REQUEST_BODY_EMPTY("Request body cannot be empty"),
-        SERVER_EXCEPTION_STACKTRACE("Server exception stacktrace:");
+        SERVER_EXCEPTION_STACKTRACE("Server exception stacktrace:"), 
+        WRONG_MODEL_RESPONSE("Model API returned wrong response");
 
         private final String message;
 
@@ -37,7 +39,8 @@ public class ExceptionsConstants {
     }
 
     public enum User {
-        NOT_FOUND;
+        NOT_FOUND,
+        NEED_TO_AUTHORIZE;
 
         public int getValue() {
             return USER_ERROR + this.ordinal();
@@ -45,7 +48,8 @@ public class ExceptionsConstants {
     }
 
     public enum Model {
-        NOT_FOUND;
+        NOT_FOUND,
+        WRONG_RESPONSE;
 
         public int getValue() {
             return MODEL_ERROR + this.ordinal();
