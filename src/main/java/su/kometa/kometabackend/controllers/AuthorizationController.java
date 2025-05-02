@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import su.kometa.kometabackend.constants.RoutesConstants;
 import su.kometa.kometabackend.dtos.request.SignUpDTO;
+import su.kometa.kometabackend.dtos.response.OkDTO;
 import su.kometa.kometabackend.services.AuthorizationService;
 import su.kometa.kometabackend.dtos.response.UserDTO;
 
@@ -19,7 +20,7 @@ public class AuthorizationController {
         this.authorizationService = authorizationService;
     }
 
-    @PostMapping("/")
+    @PostMapping("/signup")
     public UserDTO signUp(@Valid @RequestBody SignUpDTO body) {
         return new UserDTO(authorizationService.signUp(body));
     }
