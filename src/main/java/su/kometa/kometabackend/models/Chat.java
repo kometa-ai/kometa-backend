@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "chats")
 public class Chat {
@@ -21,13 +20,21 @@ public class Chat {
     @Column
     private String title;
 
-    @OneToOne(mappedBy = "user_id", fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @OneToOne(mappedBy = "model_id", fetch = FetchType.EAGER)
+    @JoinColumn(name = "model_id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private Model model;
 
     @Column
-    @OneToMany(mappedBy = "message_id", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "id", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Message> messages;
+
+    public Chat(String title, User user, Model model) {
+        this.title = title;
+        this.user = user;
+        this.model = model;
+    }
 }

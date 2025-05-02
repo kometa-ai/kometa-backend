@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "messages")
 public class Message {
@@ -24,6 +23,17 @@ public class Message {
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Model model;
 
+    @JoinColumn(name = "chat_id")
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private Chat chat;
+
     @Column
     private String content;
+    
+    public Message(User user, Model model, Chat chat, String content) {
+        this.user = user;
+        this.model = model;
+        this.chat = chat;
+        this.content = content;
+    }
 }
