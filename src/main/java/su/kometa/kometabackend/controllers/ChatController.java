@@ -8,6 +8,7 @@ import su.kometa.kometabackend.constants.RoutesConstants;
 import su.kometa.kometabackend.dtos.request.ChatCreateDTO;
 import su.kometa.kometabackend.dtos.request.ChatEditDTO;
 import su.kometa.kometabackend.dtos.response.ChatDTO;
+import su.kometa.kometabackend.dtos.response.OkDTO;
 import su.kometa.kometabackend.models.Chat;
 import su.kometa.kometabackend.models.User;
 import su.kometa.kometabackend.services.ChatService;
@@ -43,7 +44,8 @@ public class ChatController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteChat(@RequestAttribute(name = AttributesConstants.USER) User user, @PathVariable("id") long id) {
+    public OkDTO deleteChat(@RequestAttribute(name = AttributesConstants.USER) User user, @PathVariable("id") long id) {
         chatService.delete(id);
+        return new OkDTO();
     }
 }
