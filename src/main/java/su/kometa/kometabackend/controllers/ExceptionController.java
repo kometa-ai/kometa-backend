@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import su.kometa.kometabackend.configs.CommonConfig;
 import su.kometa.kometabackend.constants.ExceptionsConstants;
-import su.kometa.kometabackend.dtos.ExceptionDTO;
+import su.kometa.kometabackend.dtos.response.ExceptionDTO;
 import su.kometa.kometabackend.exceptions.BaseException;
 
 @Slf4j
