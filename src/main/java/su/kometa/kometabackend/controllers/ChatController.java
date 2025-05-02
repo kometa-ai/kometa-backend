@@ -25,11 +25,6 @@ public class ChatController {
         this.chatService = chatService;
     }
 
-    @GetMapping
-    public List<ChatDTO> getAll() {
-        return null;
-    }
-
     @GetMapping("/@me")
     public List<ChatDTO> getAllByUser(@RequestAttribute(name = AttributesConstants.USER) User user) {
         return chatService.getAllByUser(user).stream()
