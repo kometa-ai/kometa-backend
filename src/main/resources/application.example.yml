@@ -6,15 +6,33 @@ spring:
     username: kometa
     password: passwd
     url: jdbc:postgresql://localhost:5432/kometa
-    jpa:
-      hibernate:
-        ddl-auto: update
-      open-in-view: false
-    jackson:
-      property-naming-strategy: SNAKE_CASE
-    rabbitmq:
-      host: localhost
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  rabbitmq:
+    host: localhost
 
-config:
+api:
   version: 0.1
-  env: dev # dev or prod
+
+jwt:
+  secret:
+
+apis:
+  openai:
+    models:
+      - gpt-4
+      - gpt-4-32k
+    api:
+      key: 1
+      url: 1
+  gemini:
+    models:
+      - gemini-2.0-flash
+      - gemini-2.5-flash-preview-04-17
+    api:
+      key: 1
+      url: 1
