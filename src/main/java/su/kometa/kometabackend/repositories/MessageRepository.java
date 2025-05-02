@@ -6,10 +6,12 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import su.kometa.kometabackend.models.Message;
 
+import java.util.Optional;
+
 @Repository
 public interface MessageRepository extends CrudRepository<Message, Long> {
 
-    Message findById(long id);
+    Optional<Message> findById(long id);
 
     void delete(@NonNull Message message);
 }
