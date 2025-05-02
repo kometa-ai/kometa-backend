@@ -41,9 +41,7 @@ public class ChatService {
         return new Chat(null, user, body.getModel());
     }
 
-    public Chat edit(User user, long id, ChatEditDTO body) {
-
-        Chat chat = getById(id);
+    public Chat edit(Chat chat, ChatEditDTO body) {
         chat.setTitle(body.getTitle());
         return chatRepository.save(chat);
     }

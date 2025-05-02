@@ -8,6 +8,7 @@ import su.kometa.kometabackend.constants.RoutesConstants;
 import su.kometa.kometabackend.dtos.request.ChatCreateDTO;
 import su.kometa.kometabackend.dtos.request.ChatEditDTO;
 import su.kometa.kometabackend.dtos.response.ChatDTO;
+import su.kometa.kometabackend.models.Chat;
 import su.kometa.kometabackend.models.User;
 import su.kometa.kometabackend.services.ChatService;
 
@@ -42,8 +43,8 @@ public class ChatController {
     }
 
     @PatchMapping("/{id}")
-    public ChatDTO updateChat(@RequestAttribute(name = AttributesConstants.USER) User user, @PathVariable("id") long id, @Valid @RequestBody ChatEditDTO body) {
-        return new ChatDTO(chatService.edit(body, user));
+    public ChatDTO updateChat(@RequestAttribute(name = AttributesConstants.CHAT) Chat chat, @PathVariable("id") long id, @Valid @RequestBody ChatEditDTO body) {
+        return new ChatDTO(chatService.edit(chat, body));
     }
 
     @DeleteMapping("/{id}")
