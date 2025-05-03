@@ -28,7 +28,7 @@ public class Chat {
     private Model model;
 
     @Column
-    @OneToMany(mappedBy = "id", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "chat", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Message> messages;
 
     public Chat(String title, User user, Model model) {

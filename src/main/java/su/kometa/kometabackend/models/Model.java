@@ -12,25 +12,25 @@ public class Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private long id;
 
     @Column
-    public String name;
+    private String name;
 
     @Column
-    public String provider;
+    private String provider;
 
     @Column
-    public long maxTokensPerChat;
+    private long maxTokensPerChat;
 
     @Column
-    public boolean enabled;
+    private boolean enabled;
 
     @Column
-    public String apiKey;
+    private String apiKey;
 
     @Transient
-    public String apiURL;
+    private String apiURL;
 
     public Model(String name, String provider, boolean enabled) {
 
