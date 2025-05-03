@@ -12,9 +12,12 @@ public class ModelDTO {
 
     private String provider;
 
+    private boolean enabled;
+
     public ModelDTO(Model model) {
         this.id = model.getId();
         this.name = model.getName();
         this.provider = model.getProvider();
+        this.enabled = model.isEnabled();
     }
 }

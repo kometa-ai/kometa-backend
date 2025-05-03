@@ -20,13 +20,19 @@ public class Model {
     @Column
     public String provider;
 
-    @Transient
+    @Column
+    public long maxTokensPerChat;
+
+    @Column
+    public boolean enabled;
+
+    @Column
     public String apiKey;
 
     @Transient
     public String apiURL;
 
-    public Model(String name, String provider) {
+    public Model(String name, String provider, boolean enabled) {
 
     }
 }

@@ -33,4 +33,9 @@ public class ModelController {
                 .map(ModelDTO::new)
                 .collect(Collectors.toList());
     }
+
+    @PatchMapping("/{id}")
+    public ModelDTO edit(@PathVariable long id, @RequestBody ModelDTO body) {
+        return new ModelDTO(modelService.edit(id, body));
+    }
 }
