@@ -3,6 +3,8 @@ package su.kometa.kometabackend.dtos.response;
 import lombok.Data;
 import su.kometa.kometabackend.models.Chat;
 
+import java.util.List;
+
 @Data
 public class ChatDTO {
 

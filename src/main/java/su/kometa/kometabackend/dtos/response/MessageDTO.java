@@ -10,16 +10,16 @@ public class MessageDTO {
 
     private long id;
 
-    private User user;
+    private UserDTO user;
 
-    private Model model;
+    private ModelDTO model;
 
     private String content;
 
     public MessageDTO(Message message) {
         this.id = message.getId();
-        this.user = message.getUser();
-        this.model = message.getModel();
+        if (message.getUser() != null) this.user = new UserDTO(message.getUser());
+        if (message.getModel() != null) this.model = new ModelDTO(message.getModel());
         this.content = message.getContent();
     }
 }
