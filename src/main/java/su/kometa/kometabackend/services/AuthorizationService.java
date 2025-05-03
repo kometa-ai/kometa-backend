@@ -7,6 +7,7 @@ import su.kometa.kometabackend.dtos.request.LoginDTO;
 import su.kometa.kometabackend.dtos.request.SignUpDTO;
 import su.kometa.kometabackend.exceptions.NeedToAuthorizeException;
 import su.kometa.kometabackend.exceptions.UserNotFoundException;
+import su.kometa.kometabackend.exceptions.WrongPasswordException;
 import su.kometa.kometabackend.models.User;
 
 @Service
@@ -29,12 +30,12 @@ public class AuthorizationService {
         String username = body.getUsername();
         String password = body.getPassword();
 
-        String passwordHash = bCryptService.hashPassword(password);
+        String passwordHash = bCryptService.getHash(password);
 
         return new User(username, passwordHash);
     }
 
-    public User authUser(String accessToken) {
+    public User authUser(String accessToken) throws NeedToAuthorizeException {
         try {
             return userService.getById(jwtService.validate(accessToken));
         } catch(UserNotFoundException e) {
@@ -42,12 +43,12 @@ public class AuthorizationService {
         }
     }
 
-    public String login(@Valid LoginDTO body) {
+    public String login(@Valid LoginDTO body) throws WrongPasswordException {
         String username = body.getUsername();
         String password = body.getPassword();
         User user = userService.getByUsername(username);
 
-        jwtService.validate(password);
+        if (bCryptService.verify(password, user.getPassword())) throw new WrongPasswordException();
 
         return jwtService.generate(user.getId(), password);
     }
