@@ -28,7 +28,8 @@ public class ExceptionsConstants {
         WRONG_MODEL_RESPONSE("Model API returned wrong response"),
         MODEL_DISABLED("This model has been disabled by instance owner"),
         WRONG_PASSWORD("Password is incorrect"),
-        MODEL_MAX_TOKENS_PER_CHAT_REACHED("Max tokens per chat for this model has been reached");
+        MODEL_MAX_TOKENS_PER_CHAT_REACHED("Max tokens per chat for this model has been reached"),
+        USER_WITH_THIS_USERNAME_ALREADY_EXISTS("User with this username already exists"),;
 
         private final String message;
 
@@ -44,7 +45,8 @@ public class ExceptionsConstants {
     public enum User {
         NOT_FOUND,
         NEED_TO_AUTHORIZE,
-        WRONG_PASSWORD;
+        WRONG_PASSWORD,
+        ALREADY_EXISTS_WITH_THIS_USERNAME;
 
         public int getValue() {
             return USER_ERROR + this.ordinal();
