@@ -18,7 +18,7 @@ public class CommonController {
     }
 
     @GetMapping("/info")
-    public InfoDTO getInfo() {
+    public InfoDTO get() {
         return new InfoDTO(commonConfig);
     }
 }
