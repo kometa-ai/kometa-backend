@@ -20,7 +20,7 @@ public class ChatInterceptor implements HandlerInterceptor {
 
     private final ChatService chatService;
 
-    private static final Pattern CHANNEL_ID_PATTERN = Pattern.compile("/channels/(\\d+)");
+    private static final Pattern CHAT_ID_PATTERN = Pattern.compile("/chats/(\\d+)");
 
     public ChatInterceptor(ChatService chatService) {
         this.chatService = chatService;
@@ -31,7 +31,7 @@ public class ChatInterceptor implements HandlerInterceptor {
         if (HttpMethod.OPTIONS.matches(request.getMethod())) return true;
 
         String uri = request.getRequestURI();
-        Matcher matcher = CHANNEL_ID_PATTERN.matcher(uri);
+        Matcher matcher = CHAT_ID_PATTERN.matcher(uri);
 
         if (!matcher.find()) {
             throw new ChatNotFoundException();
