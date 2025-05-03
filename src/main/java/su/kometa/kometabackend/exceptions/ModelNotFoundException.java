@@ -1,4 +1,3 @@
-
 package su.kometa.kometabackend.exceptions;
 
 import org.springframework.http.HttpStatus;

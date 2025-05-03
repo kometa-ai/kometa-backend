@@ -24,8 +24,11 @@ public class ExceptionsConstants {
         INTERNAL_ERROR("An internal server error has occurred"),
         ROUTE_NOT_FOUND("Route not found"),
         REQUEST_BODY_EMPTY("Request body cannot be empty"),
-        SERVER_EXCEPTION_STACKTRACE("Server exception stacktrace:"), 
-        WRONG_MODEL_RESPONSE("Model API returned wrong response");
+        SERVER_EXCEPTION_STACKTRACE("Server exception stacktrace:"),
+        WRONG_MODEL_RESPONSE("Model API returned wrong response"),
+        MODEL_DISABLED("This model has been disabled by instance owner"),
+        WRONG_PASSWORD("Password is incorrect"),
+        MODEL_MAX_TOKENS_PER_CHAT_REACHED("Max tokens per chat for this model has been reached");
 
         private final String message;
 
@@ -40,7 +43,8 @@ public class ExceptionsConstants {
 
     public enum User {
         NOT_FOUND,
-        NEED_TO_AUTHORIZE;
+        NEED_TO_AUTHORIZE,
+        WRONG_PASSWORD;
 
         public int getValue() {
             return USER_ERROR + this.ordinal();
@@ -49,7 +53,9 @@ public class ExceptionsConstants {
 
     public enum Model {
         NOT_FOUND,
-        WRONG_RESPONSE;
+        WRONG_RESPONSE,
+        DISABLED,
+        MAX_TOKENS_PER_CHAT_REACHED;
 
         public int getValue() {
             return MODEL_ERROR + this.ordinal();
