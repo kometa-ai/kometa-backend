@@ -15,8 +15,14 @@ spring:
   rabbitmq:
     host: localhost
 
-api:
+common:
   version: 0.1
+  env: dev
+  invite-only: true
+  api:
+    url: https://api.example.com/
+  gateway:
+    url: wss://gateway.example.com/
 
 jwt:
   secret:
