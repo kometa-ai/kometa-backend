@@ -1,8 +1,8 @@
 package su.kometa.kometabackend.services;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import su.kometa.kometabackend.configs.CommonConfig;
 import su.kometa.kometabackend.dtos.request.LoginDTO;
 import su.kometa.kometabackend.dtos.request.SignUpDTO;
 import su.kometa.kometabackend.exceptions.NeedToAuthorizeException;
@@ -19,20 +19,29 @@ public class AuthorizationService {
 
     private final JWTService jwtService;
 
+    private final CommonConfig commonConfig;
+
     @Autowired
-    public AuthorizationService(JWTService jwtService, UserService userService, BCryptService bCryptService) {
+    public AuthorizationService(JWTService jwtService, UserService userService, BCryptService bCryptService, CommonConfig commonConfig) {
         this.jwtService = jwtService;
         this.userService = userService;
         this.bCryptService = bCryptService;
+        this.commonConfig = commonConfig;
     }
 
-    public User signUp(SignUpDTO body) {
+    public String signUp(SignUpDTO body) {
         String username = body.getUsername();
         String password = body.getPassword();
+        String passwordHash;
 
-        String passwordHash = bCryptService.getHash(password);
+        if (commonConfig.isInviteOnly()) return null;
+        else passwordHash = bCryptService.getHash(password);
 
-        return new User(username, passwordHash);
+        User user = new User(username, passwordHash);
+
+        userService.create(user);
+
+        return jwtService.generate(user.getId(), passwordHash);
     }
 
     public User authUser(String accessToken) throws NeedToAuthorizeException {
@@ -43,7 +52,7 @@ public class AuthorizationService {
         }
     }
 
-    public String login(@Valid LoginDTO body) throws WrongPasswordException {
+    public String login(LoginDTO body) throws WrongPasswordException {
         String username = body.getUsername();
         String password = body.getPassword();
         User user = userService.getByUsername(username);

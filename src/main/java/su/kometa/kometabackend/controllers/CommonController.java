@@ -8,7 +8,7 @@ import su.kometa.kometabackend.dtos.response.InfoDTO;
 
 @Slf4j
 @RestController
-@RequestMapping(value = RoutesConstants.AUTH_ROUTE, produces = "application/json")
+@RequestMapping(value = RoutesConstants.COMMON_ROUTE, produces = "application/json")
 public class CommonController {
 
     private final CommonConfig commonConfig;

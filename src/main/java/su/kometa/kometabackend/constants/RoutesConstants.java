@@ -9,4 +9,6 @@ public class RoutesConstants {
     public static final String MODELS_ROUTES = "/models";
 
     public static final String CHATS_ROUTE = "/chats";
+
+    public static final String COMMON_ROUTE = "/";
 }

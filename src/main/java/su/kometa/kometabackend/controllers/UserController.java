@@ -24,7 +24,7 @@ public class UserController {
 
     @PatchMapping("/@me")
     public UserDTO edit(@RequestAttribute(name = AttributesConstants.USER) User user, @Valid @RequestBody UserEditDTO body) {
-        return new UserDTO(userService.editUser(user, body));
+        return new UserDTO(userService.edit(user, body));
     }
 
     @DeleteMapping("/@me")

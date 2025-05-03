@@ -24,7 +24,11 @@ public class UserService {
         return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 
-    public User editUser(User user, @Valid UserEditDTO body) {
+    public User create(User user) {
+        return userRepository.save(user);
+    }
+
+    public User edit(User user, @Valid UserEditDTO body) {
         user.setUsername(body.getUsername());
         return userRepository.save(user);
     }

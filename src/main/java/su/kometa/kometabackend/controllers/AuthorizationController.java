@@ -23,8 +23,8 @@ public class AuthorizationController {
     }
 
     @PostMapping("/signup")
-    public UserDTO signUp(@Valid @RequestBody SignUpDTO body) {
-        return new UserDTO(authorizationService.signUp(body));
+    public AccessTokenDTO signUp(@Valid @RequestBody SignUpDTO body) {
+        return new AccessTokenDTO(authorizationService.signUp(body));
     }
 
     @PostMapping("/login")
