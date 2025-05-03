@@ -1,13 +1,13 @@
 package su.kometa.kometabackend.controllers;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import su.kometa.kometabackend.constants.AttributesConstants;
 import su.kometa.kometabackend.constants.RoutesConstants;
+import su.kometa.kometabackend.dtos.request.UserEditDTO;
 import su.kometa.kometabackend.dtos.response.OkDTO;
+import su.kometa.kometabackend.dtos.response.UserDTO;
 import su.kometa.kometabackend.models.User;
 import su.kometa.kometabackend.services.UserService;
 
@@ -20,6 +20,11 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PatchMapping("/@me")
+    public UserDTO editUser(@RequestAttribute(name = AttributesConstants.USER) User user, @Valid @RequestBody UserEditDTO body) {
+        return new UserDTO(userService.editUser(user, body));
     }
 
     @DeleteMapping("/@me")
