@@ -34,17 +34,17 @@ public class ChatController {
     }
 
     @PostMapping("/")
-    public ChatDTO createChat(@RequestAttribute(name = AttributesConstants.USER) User user, @Valid @RequestBody ChatCreateDTO body) {
+    public ChatDTO create(@RequestAttribute(name = AttributesConstants.USER) User user, @Valid @RequestBody ChatCreateDTO body) {
         return new ChatDTO(chatService.create(body, user));
     }
 
     @PatchMapping("/{id}")
-    public ChatDTO updateChat(@RequestAttribute(name = AttributesConstants.CHAT) Chat chat, @PathVariable("id") long id, @Valid @RequestBody ChatEditDTO body) {
+    public ChatDTO update(@RequestAttribute(name = AttributesConstants.CHAT) Chat chat, @PathVariable("id") long id, @Valid @RequestBody ChatEditDTO body) {
         return new ChatDTO(chatService.edit(chat, body));
     }
 
     @DeleteMapping("/{id}")
-    public OkDTO deleteChat(@RequestAttribute(name = AttributesConstants.USER) User user, @PathVariable("id") long id) {
+    public OkDTO delete(@RequestAttribute(name = AttributesConstants.USER) User user, @PathVariable("id") long id) {
         chatService.delete(id);
         return new OkDTO();
     }

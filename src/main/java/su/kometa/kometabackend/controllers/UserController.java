@@ -23,12 +23,12 @@ public class UserController {
     }
 
     @PatchMapping("/@me")
-    public UserDTO editUser(@RequestAttribute(name = AttributesConstants.USER) User user, @Valid @RequestBody UserEditDTO body) {
+    public UserDTO edit(@RequestAttribute(name = AttributesConstants.USER) User user, @Valid @RequestBody UserEditDTO body) {
         return new UserDTO(userService.editUser(user, body));
     }
 
     @DeleteMapping("/@me")
-    public OkDTO deleteUser(@RequestAttribute(name = AttributesConstants.USER) User user) {
+    public OkDTO delete(@RequestAttribute(name = AttributesConstants.USER) User user) {
         userService.delete(user);
         return new OkDTO();
     }
