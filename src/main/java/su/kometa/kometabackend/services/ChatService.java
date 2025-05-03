@@ -35,7 +35,7 @@ public class ChatService {
     public Chat create(ChatCreateDTO body, User user) {
         if (modelService.getByProvider(body.getModel().getProvider()) == null) throw new ModelNotFoundException();
 
-        return new Chat(null, user, body.getModel());
+        return chatRepository.save(new Chat(null, user, body.getModel()));
     }
 
     public Chat edit(Chat chat, ChatEditDTO body) {

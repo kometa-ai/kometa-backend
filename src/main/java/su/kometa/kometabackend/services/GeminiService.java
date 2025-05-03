@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import su.kometa.kometabackend.configs.ModelConfig;
@@ -11,11 +12,13 @@ import su.kometa.kometabackend.exceptions.WrongModelResponseException;
 import su.kometa.kometabackend.models.Chat;
 import su.kometa.kometabackend.models.Message;
 import su.kometa.kometabackend.models.Model;
+import su.kometa.kometabackend.repositories.MessageRepository;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,8 +30,10 @@ public class GeminiService {
 
     private final ObjectMapper objectMapper;
 
+    private final MessageRepository messageRepository;
+
     @Autowired
-    public GeminiService(ModelConfig modelConfig) {
+    public GeminiService(ModelConfig modelConfig, MessageRepository messageRepository) {
         this.model = new Model();
 
         model.setApiURL(modelConfig.getGemini().getApi().getUrl());
@@ -39,15 +44,16 @@ public class GeminiService {
                 .build();
 
         this.objectMapper = new ObjectMapper();
+        this.messageRepository = messageRepository;
     }
 
     public Message sendMessage(Chat chat, String content) {
-        List<ServiceRequestBody.Content> contents = chat.getMessages().stream()
+        List<ServiceRequestBody.Content> contents = new ArrayList<>(chat.getMessages().stream()
                 .map(message -> {
                     String role = message.getUser() == null ? "model" : "user";
                     List<ServiceRequestBody.Part> parts = List.of(new ServiceRequestBody.Part(message.getContent()));
                     return new ServiceRequestBody.Content(role, parts);
-                }).toList();
+                }).toList());
 
         contents.add(new ServiceRequestBody.Content("user", List.of(new ServiceRequestBody.Part(content))));
 
@@ -67,11 +73,12 @@ public class GeminiService {
 
             if (response.statusCode() == 200) {
                 ServiceResponseBody responseBody = objectMapper.readValue(response.body(), ServiceResponseBody.class);
-                return new Message(null, this.model, chat, responseBody.getCandidates().getFirst().getContent().getParts().getFirst().getText());
+                return new Message(null, chat.getModel(), chat, responseBody.getCandidates().getFirst().getContent().getParts().getFirst().getText());
             } else {
                 throw new WrongModelResponseException();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new WrongModelResponseException();
         }
     }
@@ -99,14 +106,18 @@ public class GeminiService {
 
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class ServiceResponseBody {
+
         private List<Candidate> candidates;
         private UsageMetadata usageMetadata;
         private String modelVersion;
 
         @Data
         @AllArgsConstructor
+        @NoArgsConstructor
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class Candidate {
             private Content content;
             private String finishReason;
@@ -115,6 +126,8 @@ public class GeminiService {
 
         @Data
         @AllArgsConstructor
+        @NoArgsConstructor
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class Content {
             private List<Part> parts;
             private String role;
@@ -122,12 +135,16 @@ public class GeminiService {
 
         @Data
         @AllArgsConstructor
+        @NoArgsConstructor
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class Part {
             private String text;
         }
 
         @Data
         @AllArgsConstructor
+        @NoArgsConstructor
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class UsageMetadata {
             private int promptTokenCount;
             private int candidatesTokenCount;
@@ -138,6 +155,8 @@ public class GeminiService {
 
         @Data
         @AllArgsConstructor
+        @NoArgsConstructor
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class TokenDetails {
             private String modality;
             private int tokenCount;

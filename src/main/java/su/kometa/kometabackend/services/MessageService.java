@@ -1,8 +1,8 @@
-
 package su.kometa.kometabackend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import su.kometa.kometabackend.dtos.request.MessageCreateDTO;
 import su.kometa.kometabackend.exceptions.MessageNotFoundException;
 import su.kometa.kometabackend.exceptions.ModelNotFoundException;
 import su.kometa.kometabackend.models.Chat;
@@ -33,25 +33,31 @@ public class MessageService {
         return messageRepository.findById(id).orElseThrow(MessageNotFoundException::new);
     }
 
-    public List<Message> createMessageAndRequestModelResponse(Chat chat, User user, String content) {
+    public List<Message> getAllByChat(Chat chat, long before, int limit) {
+        if (limit <= 0) limit = 25;
+        if (before <= 0) before = System.currentTimeMillis();
+
+        return messageRepository.findAllByChatAndTimestampBeforeOrderByTimestampDesc(chat, before, limit);
+    }
+
+    public Message createMessageAndRequestModelResponse(Chat chat, User user, MessageCreateDTO body) {
         chat = chatService.getById(chat.getId());
 
         String modelProvider = chat.getModel().getProvider();
 
-        List<Message> messages = new ArrayList<>();
+        Message userMessage = messageRepository.save(new Message(user, null, chat, body.getContent()));
 
         switch (modelProvider) {
             case "openai":
                 return null;
             case "gemini":
-                messages.add(geminiService.sendMessage(chat, content));
+                Message modelMessage = geminiService.sendMessage(chat, body.getContent());
+                messageRepository.save(modelMessage);
                 break;
             default:
                 throw new ModelNotFoundException();
         }
 
-        messages.add(new Message(user, null, chat, content));
-
-        return messages;
+        return userMessage;
     }
 }
