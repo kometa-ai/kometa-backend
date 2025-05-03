@@ -29,6 +29,18 @@ public class AuthorizationService {
         this.commonConfig = commonConfig;
     }
 
+    public User authUser(String accessToken) throws NeedToAuthorizeException {
+        long userId;
+
+        try {
+            userId = jwtService.validate(accessToken);
+        } catch (Exception e) {
+            throw new NeedToAuthorizeException();
+        }
+
+        return userService.getById(userId);
+    }
+
     public String signUp(SignUpDTO body) {
         String username = body.getUsername();
         String password = body.getPassword();
@@ -42,14 +54,6 @@ public class AuthorizationService {
         userService.create(user);
 
         return jwtService.generate(user.getId(), passwordHash);
-    }
-
-    public User authUser(String accessToken) throws NeedToAuthorizeException {
-        try {
-            return userService.getById(jwtService.validate(accessToken));
-        } catch(UserNotFoundException e) {
-            throw new NeedToAuthorizeException();
-        }
     }
 
     public String login(LoginDTO body) throws WrongPasswordException {

@@ -30,7 +30,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) {
         if (Objects.equals(request.getMethod(), HttpMethod.OPTIONS.name())) return true;
 
-        String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION).substring(7);
 
         User user = authorizationService.authUser(accessToken);
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import su.kometa.kometabackend.configs.JWTConfig;
 import su.kometa.kometabackend.constants.TokenConstants;
+import su.kometa.kometabackend.exceptions.NeedToAuthorizeException;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -35,11 +36,13 @@ public class JWTService {
                 .compact();
     }
 
-    public long validate(String token) {
+    public long validate(String token) throws NeedToAuthorizeException {
         Jws<Claims> claimsJws = Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()
                 .parseSignedClaims(token);
+
+        if (claimsJws.getPayload().getId() == null) throw new NeedToAuthorizeException();
 
         return Long.parseLong(claimsJws.getPayload().getId());
     }
