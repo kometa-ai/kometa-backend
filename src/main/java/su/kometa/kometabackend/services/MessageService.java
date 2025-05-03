@@ -50,7 +50,7 @@ public class MessageService {
                 throw new ModelNotFoundException();
         }
 
-        messages.add(new Message(0, user, null, chat, content));
+        messages.add(new Message(user, null, chat, content));
 
         return messages;
     }
