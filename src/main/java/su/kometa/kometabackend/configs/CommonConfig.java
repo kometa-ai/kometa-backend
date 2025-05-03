@@ -15,7 +15,7 @@ public class CommonConfig {
 
     private String env;
 
-    private String inviteOnly;
+    private boolean inviteOnly;
 
     private Api api;
 
@@ -33,9 +33,5 @@ public class CommonConfig {
 
     public boolean isDevelopment() {
         return "dev".equalsIgnoreCase(env);
-    }
-
-    public boolean isInviteOnly() {
-        return "true".equalsIgnoreCase(inviteOnly);
     }
 }
