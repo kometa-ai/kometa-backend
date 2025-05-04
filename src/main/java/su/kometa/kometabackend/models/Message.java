@@ -28,9 +28,9 @@ public class Message {
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Chat chat;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "reply_message_id")
-    private Message replyMessage;
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "parent_message_id")
+    private Message parentMessage;
 
     @Column
     private String content;
@@ -38,12 +38,12 @@ public class Message {
     @Column
     private long timestamp;
     
-    public Message(User user, Model model, Chat chat, String content, Message replyMessage) {
+    public Message(User user, Model model, Chat chat, String content, Message parentMessage) {
         this.user = user;
         this.model = model;
         this.chat = chat;
         this.content = content;
         this.timestamp = System.currentTimeMillis();
-        this.replyMessage = replyMessage;
+        this.parentMessage = parentMessage;
     }
 }

@@ -16,6 +16,8 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
 
     Optional<Message> findById(long id);
 
+    Optional<Message> findByParentMessage(Message parentMessage);
+
     @Query("SELECT m FROM Message m WHERE m.chat = :chat AND m.timestamp < :before ORDER BY m.timestamp DESC LIMIT :limit")
     List<Message> findAllByChatAndTimestampBeforeOrderByTimestampDesc(@Param("chat") Chat chat, @Param("before") long before, @Param("limit") int limit);
 
