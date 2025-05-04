@@ -73,7 +73,7 @@ public class GeminiService {
 
             if (response.statusCode() == 200) {
                 ServiceResponseBody responseBody = objectMapper.readValue(response.body(), ServiceResponseBody.class);
-                return new Message(null, chat.getModel(), chat, responseBody.getCandidates().getFirst().getContent().getParts().getFirst().getText());
+                return new Message(null, chat.getModel(), chat, responseBody.getCandidates().getFirst().getContent().getParts().getFirst().getText(), null);
             } else {
                 throw new WrongModelResponseException();
             }

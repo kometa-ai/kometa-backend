@@ -71,4 +71,12 @@ public class ChatController {
     ) {
         return new MessageDTO(messageService.createMessageAndRequestModelResponse(chat, user, body));
     }
+
+    @GetMapping("/{id}/messages/{messageId}")
+    public MessageDTO getMessage(@RequestAttribute(name = AttributesConstants.CHAT) Chat chat,
+        @PathVariable("id") long id,
+        @PathVariable("messageId") long messageId
+    ) {
+        return new MessageDTO(messageService.getMessageById(messageId));
+    }
 }

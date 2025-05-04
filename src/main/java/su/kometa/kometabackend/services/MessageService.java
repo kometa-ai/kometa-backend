@@ -45,18 +45,22 @@ public class MessageService {
 
         String modelProvider = chat.getModel().getProvider();
 
-        Message userMessage = messageRepository.save(new Message(user, null, chat, body.getContent()));
+        Message userMessage = messageRepository.save(new Message(user, null, chat, body.getContent(), null));
+        Message modelMessage;
 
         switch (modelProvider) {
             case "openai":
                 return null;
             case "gemini":
-                Message modelMessage = geminiService.sendMessage(chat, body.getContent());
+                modelMessage = geminiService.sendMessage(chat, body.getContent());
                 messageRepository.save(modelMessage);
                 break;
             default:
                 throw new ModelNotFoundException();
         }
+
+        userMessage.setReplyMessage(modelMessage);
+        messageRepository.save(userMessage);
 
         return userMessage;
     }
