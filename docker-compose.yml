@@ -34,5 +34,7 @@ services:
 networks:
   kometa_db:
     external: true
+  kometa_broker:
+    external: true
   traefik:
     external: true

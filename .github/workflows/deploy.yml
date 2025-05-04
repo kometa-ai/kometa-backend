@@ -1,0 +1,56 @@
+name: Deploy Kometa
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    runs-on: cloud
+    environment: ${{ github.ref_name == 'main' && 'production' || github.ref_name == 'dev' && 'development' || 'development' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create config
+        run: |
+          cat <<EOF > src/main/resources/application.properties
+          spring.application.name=kometa-backend
+          spring.datasource.driver-class-name=org.postgresql.Driver
+          spring.datasource.username=${{ secrets.DB_USERNAME }}
+          spring.datasource.password=${{ secrets.DB_PASSWORD }}
+          spring.datasource.url=jdbc:postgresql://${{ vars.DB_HOSTNAME }}:${{ vars.DB_PORT }}/${{ vars.DB_DATABASE }}
+          spring.jpa.hibernate.ddl-auto=update
+          spring.jpa.open-in-view=false
+          spring.jackson.property-naming-strategy=SNAKE_CASE
+          spring.rabbitmq.host=${{ vars.RABBIT_HOSTNAME }}
+          common.version=0.1
+          common.env=${{ github.ref_name == 'main' && 'prod' || github.ref_name == 'dev' && 'dev' || 'dev' }}
+          common.invite-only=true
+          common.api.url=https://api${{ github.ref_name == 'dev' && '.dev' || '' }}.notweuz.ru/
+          common.gateway.url=https://api${{ github.ref_name == 'dev' && '.dev' || '' }}.notweuz.ru/
+          jwt.secret=${{ secrets.JWT_SECRET }}
+          apis.openai.models[0]=gpt-4
+          apis.openai.models[1]=gpt-4-32k
+          apis.openai.api.key=1
+          apis.openai.api.url=1
+          apis.gemini.models[0]=gemini-2.0-flash
+          apis.gemini.models[1]=gemini-2.5-flash-preview-04-17
+          apis.gemini.api.key=1
+          apis.gemini.api.url=1
+          EOF
+
+      - name: Build
+        env:
+          JAVA_HOME: ${{ vars.JAVA_HOME }}
+          PATH: ${{ vars.JAVA_HOME }}/bin:$PATH
+        run: ./gradlew build
+
+      - name: Run
+        env:
+          SUFFIX: ${{ github.ref_name == 'dev' && '-dev' || '' }}
+        run: docker-compose up kometa-backend$SUFFIX -d --build
