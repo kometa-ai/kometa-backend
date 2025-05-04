@@ -1,0 +1,38 @@
+services:
+  kometa-backend:
+    container_name: kometa-backend
+    image: kometa/backend:prod
+    build:
+      context: .
+    restart: always
+    networks:
+      - kometa_db
+      - traefik
+    labels:
+      traefik.enable: true
+      traefik.http.routers.kometa-backend.rule: Host(`api.notweuz.ru`)
+      traefik.http.routers.kometa-backend.tls.certresolver: letsencrypt
+      traefik.http.services.kometa-backend.loadbalancer.server.port: 8080
+      traefik.http.routers.kometa-backend.middlewares: ratelimit@file
+
+  kometa-backend-dev:
+    container_name: kometa-backend-dev
+    image: kometa/backend:dev
+    build:
+      context: .
+    restart: always
+    networks:
+      - kometa_db
+      - traefik
+    labels:
+      traefik.enable: true
+      traefik.http.routers.kometa-backend-dev.rule: Host(`api.dev.notweuz.ru`)
+      traefik.http.routers.kometa-backend-dev.tls.certresolver: letsencrypt
+      traefik.http.services.kometa-backend-dev.loadbalancer.server.port: 8080
+      traefik.http.routers.kometa-backend-dev.middlewares: ratelimit@file
+
+networks:
+  kometa_db:
+    external: true
+  traefik:
+    external: true
