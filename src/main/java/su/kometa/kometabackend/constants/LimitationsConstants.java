@@ -1,34 +1,67 @@
 package su.kometa.kometabackend.constants;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import su.kometa.kometabackend.configs.CommonConfig;
 
+@Component
+@RequiredArgsConstructor
 public class LimitationsConstants {
+    private final CommonConfig commonConfig;
 
-    public static final int USERNAME_MAX = 32;
+    public int getUsernameMax() {
+        return commonConfig.getLimitations().getUsername().getMaxLength();
+    }
 
-    public static final int USERNAME_MIN = 3;
+    public int getUsernameMin() {
+        return commonConfig.getLimitations().getUsername().getMinLength();
+    }
 
-    public static final int PASSWORD_MAX = 256;
+    public int getPasswordMax() {
+        return commonConfig.getLimitations().getPassword().getMaxLength();
+    }
 
-    public static final int PASSWORD_MIN = 4;
+    public int getPasswordMin() {
+        return commonConfig.getLimitations().getPassword().getMinLength();
+    }
 
-    public static final int TITLE_MAX = 32;
+    public int getTitleMax() {
+        return commonConfig.getLimitations().getTitle().getMaxLength();
+    }
 
-    public static final int TITLE_MIN = 1;
+    public int getTitleMin() {
+        return commonConfig.getLimitations().getTitle().getMinLength();
+    }
 
-    public static final int MESSAGE_CONTENT_MAX = 4096;
+    public int getMessageContentMax() {
+        return commonConfig.getLimitations().getMessageContent().getMaxLength();
+    }
 
-    public static final int MESSAGE_CONTENT_MIN = 1;
+    public int getMessageContentMin() {
+        return commonConfig.getLimitations().getMessageContent().getMinLength();
+    }
 
-    public static final int MESSAGE_ATTACHMENTS_MAX = 10;
+    public int getMessageAttachmentsMax() {
+        return commonConfig.getLimitations().getMessageAttachments().getMaxAmount();
+    }
 
-    public static final int MESSAGE_ATTACHMENTS_MIN = 0;
+    public int getMessageAttachmentsMin() {
+        return commonConfig.getLimitations().getMessageAttachments().getMinAmount();
+    }
 
-    public static final int MODEL_API_KEY_MAX = 256;
+    public int getModelApiKeyMax() {
+        return commonConfig.getLimitations().getModelKey().getMaxLength();
+    }
 
-    public static final int MODEL_API_KEY_MIN = 8;
+    public int getModelApiKeyMin() {
+        return commonConfig.getLimitations().getModelKey().getMinLength();
+    }
 
-    public static final int MODEL_TOKENS_MAX = 2048;
+    public int getModelTokensMax() {
+        return commonConfig.getLimitations().getModelTokens().getMaxAmount();
+    }
 
-    public static final int MODEL_TOKENS_MIN = 8;
+    public int getModelTokensMin() {
+        return commonConfig.getLimitations().getModelTokens().getMinAmount();
+    }
 }

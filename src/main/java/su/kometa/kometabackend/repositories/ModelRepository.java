@@ -18,4 +18,6 @@ public interface ModelRepository extends CrudRepository<Model, Long> {
     List<Model> findAllByProvider(String provider);
 
     void delete(@NonNull Model model);
+
+    boolean existsByName(String name);
 }
