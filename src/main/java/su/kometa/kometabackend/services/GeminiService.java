@@ -57,8 +57,12 @@ public class GeminiService {
 
         contents.add(new ServiceRequestBody.Content("user", List.of(new ServiceRequestBody.Part(content))));
 
+        List<ServiceRequestBody.Tool> tools = List.of(
+                new ServiceRequestBody.Tool(new ServiceRequestBody.Tool.GoogleSearch())
+        );
+
         try {
-            ServiceRequestBody body = new ServiceRequestBody(contents);
+            ServiceRequestBody body = new ServiceRequestBody(contents, tools);
             String requestJson = objectMapper.writeValueAsString(body);
 
             this.model.setName(chat.getModel().getName());
@@ -89,6 +93,7 @@ public class GeminiService {
     static class ServiceRequestBody {
 
         private List<Content> contents;
+        private List<Tool> tools;
 
         @Data
         @AllArgsConstructor
@@ -101,6 +106,18 @@ public class GeminiService {
         @AllArgsConstructor
         public static class Part {
             private String text;
+        }
+        
+        @Data
+        @AllArgsConstructor
+        public static class Tool {
+            private GoogleSearch google_search;
+
+            @Data
+            @JsonIgnoreProperties(ignoreUnknown = true)
+            public static class GoogleSearch {
+
+            }
         }
     }
 
@@ -163,4 +180,3 @@ public class GeminiService {
         }
     }
 }
-
