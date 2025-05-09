@@ -9,11 +9,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "configs")
 public class Config {
-
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(unique = true)
     private String key;
 
     @Column
     private String value;
+
+    public Config(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
 }

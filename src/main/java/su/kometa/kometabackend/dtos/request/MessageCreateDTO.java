@@ -1,12 +1,14 @@
 package su.kometa.kometabackend.dtos.request;
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import su.kometa.kometabackend.constants.LimitationsConstants;
+import su.kometa.kometabackend.validators.LimitationsConstraint;
 
 @Data
 public class MessageCreateDTO {
 
-    @Size(min = LimitationsConstants.MESSAGE_CONTENT_MIN, max = LimitationsConstants.MESSAGE_CONTENT_MAX)
+    @NotBlank
+    @LimitationsConstraint(type = "messageContent", isMin = true)
+    @LimitationsConstraint(type = "messageContent", isMin = false)
     private String content;
 }

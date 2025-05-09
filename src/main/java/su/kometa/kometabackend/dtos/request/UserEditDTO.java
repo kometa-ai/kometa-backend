@@ -1,12 +1,14 @@
 package su.kometa.kometabackend.dtos.request;
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import su.kometa.kometabackend.constants.LimitationsConstants;
+import su.kometa.kometabackend.validators.LimitationsConstraint;
 
 @Data
 public class UserEditDTO {
 
-    @Size(min = LimitationsConstants.USERNAME_MIN, max = LimitationsConstants.USERNAME_MAX)
+    @NotBlank
+    @LimitationsConstraint(type = "username", isMin = true)
+    @LimitationsConstraint(type = "username", isMin = false)
     private String username;
 }

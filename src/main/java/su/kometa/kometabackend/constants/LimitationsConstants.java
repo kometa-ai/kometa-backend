@@ -2,66 +2,70 @@ package su.kometa.kometabackend.constants;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import su.kometa.kometabackend.configs.CommonConfig;
+import su.kometa.kometabackend.repositories.ConfigRepository;
 
 @Component
 @RequiredArgsConstructor
 public class LimitationsConstants {
-    private final CommonConfig commonConfig;
+    private final ConfigRepository configRepository;
+
+    private int getIntValue(String key) {
+        return Integer.parseInt(configRepository.findByKey(key).getValue());
+    }
 
     public int getUsernameMax() {
-        return commonConfig.getLimitations().getUsername().getMaxLength();
+        return getIntValue("username_max_length");
     }
 
     public int getUsernameMin() {
-        return commonConfig.getLimitations().getUsername().getMinLength();
+        return getIntValue("username_min_length");
     }
 
     public int getPasswordMax() {
-        return commonConfig.getLimitations().getPassword().getMaxLength();
+        return getIntValue("password_max_length");
     }
 
     public int getPasswordMin() {
-        return commonConfig.getLimitations().getPassword().getMinLength();
+        return getIntValue("password_min_length");
     }
 
     public int getTitleMax() {
-        return commonConfig.getLimitations().getTitle().getMaxLength();
+        return getIntValue("title_max_length");
     }
 
     public int getTitleMin() {
-        return commonConfig.getLimitations().getTitle().getMinLength();
+        return getIntValue("title_min_length");
     }
 
     public int getMessageContentMax() {
-        return commonConfig.getLimitations().getMessageContent().getMaxLength();
+        return getIntValue("message_content_max_length");
     }
 
     public int getMessageContentMin() {
-        return commonConfig.getLimitations().getMessageContent().getMinLength();
+        return getIntValue("message_content_min_length");
     }
 
     public int getMessageAttachmentsMax() {
-        return commonConfig.getLimitations().getMessageAttachments().getMaxAmount();
+        return getIntValue("message_attachments_max_amount");
     }
 
     public int getMessageAttachmentsMin() {
-        return commonConfig.getLimitations().getMessageAttachments().getMinAmount();
+        return getIntValue("message_attachments_min_amount");
     }
 
     public int getModelApiKeyMax() {
-        return commonConfig.getLimitations().getModelKey().getMaxLength();
+        return getIntValue("model_key_max_length");
     }
 
     public int getModelApiKeyMin() {
-        return commonConfig.getLimitations().getModelKey().getMinLength();
+        return getIntValue("model_key_min_length");
     }
 
     public int getModelTokensMax() {
-        return commonConfig.getLimitations().getModelTokens().getMaxAmount();
+        return getIntValue("model_tokens_max_amount");
     }
 
     public int getModelTokensMin() {
-        return commonConfig.getLimitations().getModelTokens().getMinAmount();
+        return getIntValue("model_tokens_min_amount");
     }
 }

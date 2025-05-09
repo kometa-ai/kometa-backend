@@ -1,15 +1,13 @@
 package su.kometa.kometabackend.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import su.kometa.kometabackend.models.Config;
 
-import java.util.Optional;
-
 @Repository
-public interface ConfigRepository extends CrudRepository<Config, Long> {
+public interface ConfigRepository extends JpaRepository<Config, Long> {
 
-    Optional<Config> findByKey(String key);
+    boolean existsByKey(String key);
 
-    void deleteByKey(String key);
+    Config findByKey(String key);
 }

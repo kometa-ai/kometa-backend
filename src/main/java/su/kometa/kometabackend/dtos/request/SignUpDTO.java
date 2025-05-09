@@ -1,15 +1,19 @@
 package su.kometa.kometabackend.dtos.request;
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import su.kometa.kometabackend.constants.LimitationsConstants;
+import su.kometa.kometabackend.validators.LimitationsConstraint;
 
 @Data
 public class SignUpDTO {
 
-    @Size(min = LimitationsConstants.USERNAME_MIN, max = LimitationsConstants.USERNAME_MAX)
+    @NotBlank
+    @LimitationsConstraint(type = "username", isMin = true)
+    @LimitationsConstraint(type = "username", isMin = false)
     private String username;
 
-    @Size(min = LimitationsConstants.PASSWORD_MIN, max = LimitationsConstants.PASSWORD_MAX)
+    @NotBlank
+    @LimitationsConstraint(type = "password", isMin = true)
+    @LimitationsConstraint(type = "password", isMin = false)
     private String password;
 }

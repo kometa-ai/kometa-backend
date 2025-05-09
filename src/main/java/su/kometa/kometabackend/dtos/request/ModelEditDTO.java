@@ -1,17 +1,21 @@
 package su.kometa.kometabackend.dtos.request;
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import su.kometa.kometabackend.constants.LimitationsConstants;
+import su.kometa.kometabackend.validators.LimitationsConstraint;
 
 @Data
 public class ModelEditDTO {
 
-    @Size(min = LimitationsConstants.MODEL_API_KEY_MIN, max = LimitationsConstants.MODEL_API_KEY_MAX)
+    @NotBlank
+    @LimitationsConstraint(type = "modelApiKey", isMin = true)
+    @LimitationsConstraint(type = "modelApiKey", isMin = false)
     private String apiKey;
 
-    @Size(min = LimitationsConstants.MODEL_TOKENS_MIN, max = LimitationsConstants.MODEL_TOKENS_MAX)
-    private long maxTokensPerChat;
+    @NotBlank
+    @LimitationsConstraint(type = "modelTokens", isMin = true)
+    @LimitationsConstraint(type = "modelTokens", isMin = false)
+    private String maxTokensPerChat;
 
     private boolean enabled;
 }
