@@ -23,6 +23,28 @@ common:
     url: https://api.example.com/
   gateway:
     url: wss://gateway.example.com/
+  limitations:
+    username:
+      min-length: 3
+      max-length: 32
+    password:
+      min-length: 4
+      max-length: 256
+    title:
+      min-length: 1
+      max-length: 32
+    message-content:
+      min-length: 1
+      max-length: 4096
+    message-attachments:
+      min-amount: 0
+      max-amount: 10
+    model-key:
+      min-length: 8
+      max-length: 256
+    model-tokens:
+      min-amount: 8
+      max-amount: 2048
 
 jwt:
   secret:
