@@ -15,7 +15,7 @@ public class Config {
     private long id;
 
     @Column
-    private String name;
+    private String key;
 
     @Column
     private String value;

@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface ConfigRepository extends CrudRepository<Config, Long> {
 
-    Optional<Config> findByName(String name);
+    Optional<Config> findByKey(String key);
 
-    void deleteByName(String name);
+    void deleteByKey(String key);
 }
