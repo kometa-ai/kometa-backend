@@ -11,9 +11,6 @@ import lombok.NoArgsConstructor;
 public class Config {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     @Column
     private String key;
 
