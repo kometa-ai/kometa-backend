@@ -32,7 +32,11 @@ public class Model {
     @Transient
     private String apiURL;
 
-    public Model(String name, String provider, boolean enabled) {
-
+    public Model(String name, String provider, boolean enabled, String apiKey, String apiURL) {
+        this.name = name;
+        this.provider = provider;
+        this.enabled = enabled;
+        this.apiKey = apiKey;
+        this.apiURL = apiURL;
     }
 }
