@@ -9,6 +9,7 @@ import su.kometa.kometabackend.exceptions.NeedToAuthorizeException;
 import su.kometa.kometabackend.exceptions.UserNotFoundException;
 import su.kometa.kometabackend.exceptions.WrongPasswordException;
 import su.kometa.kometabackend.models.User;
+import su.kometa.kometabackend.repositories.ConfigRepository;
 
 @Service
 public class AuthorizationService {
@@ -21,12 +22,15 @@ public class AuthorizationService {
 
     private final CommonConfig commonConfig;
 
+    private final ConfigRepository configRepository;
+
     @Autowired
-    public AuthorizationService(JWTService jwtService, UserService userService, BCryptService bCryptService, CommonConfig commonConfig) {
+    public AuthorizationService(JWTService jwtService, UserService userService, BCryptService bCryptService, CommonConfig commonConfig, ConfigRepository configRepository) {
         this.jwtService = jwtService;
         this.userService = userService;
         this.bCryptService = bCryptService;
         this.commonConfig = commonConfig;
+        this.configRepository = configRepository;
     }
 
     public User authUser(String accessToken) throws NeedToAuthorizeException {
@@ -46,7 +50,7 @@ public class AuthorizationService {
         String password = body.getPassword();
         String passwordHash;
 
-        if (commonConfig.isInviteOnly()) return null;
+        if (Boolean.parseBoolean(configRepository.findByKey("invite_only").getValue())) return null;
         else passwordHash = bCryptService.getHash(password);
 
         User user = new User(username, passwordHash);
