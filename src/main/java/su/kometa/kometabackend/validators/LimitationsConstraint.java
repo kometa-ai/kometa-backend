@@ -2,6 +2,7 @@ package su.kometa.kometabackend.validators;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+
 import java.lang.annotation.*;
 
 @Documented
@@ -11,8 +12,12 @@ import java.lang.annotation.*;
 @Repeatable(LimitationsConstraints.class)
 public @interface LimitationsConstraint {
     String message() default "Invalid value";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
+
     String type();
+
     boolean isMin() default false;
 } 
